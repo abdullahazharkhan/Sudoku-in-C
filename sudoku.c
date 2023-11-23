@@ -6,12 +6,12 @@
 
 int main()
 {
-    
+
     int decision_menu;
     system("cls");
     system("color 0D");
     printf("|=====================|\n");
-    printf("|  Welcome to SUDOKU  |\n");
+    printf("|--Welcome to Sudoku--|\n");
     printf("|=====================|\n");
     printf("|   1 - Easy Mode     |\n");
     printf("|   2 - Medium Mode   |\n");
