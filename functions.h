@@ -3,10 +3,11 @@
 #include <windows.h>
 #include <time.h>
 
-void game_check(int combination[9][9]);
+void game_check(int combination[9][9], int maxMistakes);
 void choose_matrix(int decision_menu);
 void trophy(void);
-
+void print(int combination[9][9]);
+void lost(void);
 
 void choose_matrix(int decision_menu)
 { // so you can play on three different levels :)
@@ -43,15 +44,15 @@ void choose_matrix(int decision_menu)
 
     if (decision_menu == 1)
     {
-        game_check(combination0);
+        game_check(combination0, 10);
     }
     else if (decision_menu == 2)
     {
-        game_check(combination1);
+        game_check(combination1, 8);
     }
     else if (decision_menu == 3)
     {
-        game_check(combination2);
+        game_check(combination2, 6);
     }
 }
 
@@ -70,6 +71,12 @@ void trophy()
     printf("             _`) (`_                  \n");
     printf("           _/_______\\_                \n");
     printf("          /___________\\\n----------------------------------------");
+    Sleep(5000);
+}
+
+void lost()
+{
+    printf("You lost bhai jee");
     Sleep(5000);
 }
 
@@ -117,12 +124,15 @@ void print(int combination[9][9])
     }
 }
 
-void game_check(int combination[9][9])
-{                       // function of the game that receives the chosen matrix
+void game_check(int combination[9][9], int maxMistakes) // function of the game that receives the chosen matrix
+{
     int cont = 0;       // counter for the game to run while the matrix is ​​not completely filled
     int original[9][9]; // original matrix to compare with the matrix where the user will change the values
+    int mistakes_count = maxMistakes;
     int maximum_number_of_columns = 0;
     int maximum_number_of_rows = 0;
+    // l - row
+    // c - column
     int l = 0;
     int c = 0;
     int give_up = 1;
@@ -303,6 +313,13 @@ void game_check(int combination[9][9])
                             printf("\n--------------------------------------");
                             printf("\n| THAT NUMBER ALREADY EXISTS IN THE QUADRANT |\n");
                             printf("--------------------------------------\n");
+                            mistakes_count -= 1;
+                            if (!mistakes_count)
+                            {
+                                lost();
+                                return;
+                            }
+                            printf("\n| Mistakes Left: %d |\n", mistakes_count);
                             l = maximum_number_of_rows;
                             c1 = maximum_number_of_columns;
                             i = 9;
@@ -317,6 +334,13 @@ void game_check(int combination[9][9])
                                 printf("\n-------------------------------");
                                 printf("\n| value ALREADY EXISTS IN row |\n");
                                 printf("-------------------------------\n");
+                                mistakes_count -= 1;
+                                if (!mistakes_count)
+                                {
+                                    lost();
+                                    return;
+                                }
+                                printf("\n| Mistakes Left: %d |\n", mistakes_count);
                                 i = 9;
                                 j = 9;
                                 Sleep(2000);
@@ -328,6 +352,13 @@ void game_check(int combination[9][9])
                                 printf("\n--------------------------------");
                                 printf("\n| value ALREADY EXISTS IN column |\n");
                                 printf("--------------------------------\n");
+                                mistakes_count -= 1;
+                                if (!mistakes_count)
+                                {
+                                    lost();
+                                    return;
+                                }
+                                printf("\n| Mistakes Left: %d |\n", mistakes_count);
                                 i = 9;
                                 j = 9;
                                 Sleep(2000);
